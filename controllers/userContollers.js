@@ -44,7 +44,14 @@ const login = async (req, res) => {
             return res.status(400).json({ message: "Invalid credentials" }); // 400 means bad request
         }
         const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, SECRET_KEY);
-        
+        res.setHeader('Authorization', `Bearer ${token}`); // Set the Authorization header
+
+        res.cookie("authToken", token, {
+            httpOnly: true,
+            sameSite : "lax"
+            // Other cookie options (e.g., secure, sameSite, maxAge, etc.)
+        });
+
         res.status(200).json({ user: existingUser, token: token ,message : "Login Sucessfully"});
     } catch (err) {
         console.log(err);

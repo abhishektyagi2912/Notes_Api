@@ -7,6 +7,9 @@ const { signup, login } = require("../controllers/userContollers");
 authrouter.post('/signup', signup);
 
 authrouter.post('/login', login);
+authrouter.get('/login', (req, res) => {
+    res.render('login');
+});
 
 module.exports = authrouter;
 

@@ -45,10 +45,10 @@ const login = async (req, res) => {
         }
         const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, SECRET_KEY);
         
-        return res.status(200).json({ user: existingUser, token: token ,message : "Login Sucessfully"});
+        res.status(200).json({ user: existingUser, token: token ,message : "Login Sucessfully"});
     } catch (err) {
         console.log(err);
-        return res.status(500).json({ message: "Something went wrong" }); // 500 means server error
+        res.status(500).json({ message: "Something went wrong" }); // 500 means server error
     }
 }
 

@@ -27,7 +27,7 @@ app.use("/notes",notesRouter);
 
 
 app.get('/', (req, res) => {
-    res.render('login');
+    res.render('home');
 });
 
 

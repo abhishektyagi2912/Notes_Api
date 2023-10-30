@@ -6,6 +6,7 @@ var notesRouter = require('./routes/notesroutes');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require("cors");
+const path = require('path');
 const auth = require('./middleware/middleware');
 const middleware = require('./middleware/authmid');
 const cookieParser = require('cookie-parser');
@@ -15,7 +16,7 @@ dotenv.config();
 app.set('view engine', 'ejs');
 app.use(cors());
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(express.json()); //this is used because we are sending data in json format and req is in string format so we have to convert it into json format
 app.use(authRouter);

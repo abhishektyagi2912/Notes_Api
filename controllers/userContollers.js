@@ -24,6 +24,11 @@ const signup = async (req, res) => {
         const token = jwt.sign({email: user.email, id : user._id, }, SECRET_KEY);
 
         // all process are done user create and token are generated
+        res.cookie("authToken", token, {
+            httpOnly: true,
+            sameSite : "lax"
+            // Other cookie options (e.g., secure, sameSite, maxAge, etc.)
+        });
         return res.status(201).json({result : user, token});   //201 means created sucessfully
     }
     catch(err){
@@ -44,7 +49,8 @@ const login = async (req, res) => {
             return res.status(400).json({ message: "Invalid credentials" }); // 400 means bad request
         }
         const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, SECRET_KEY);
-        res.setHeader('Authorization', `Bearer ${token}`); // Set the Authorization header
+        
+        // res.setHeader('Authorization', `Bearer ${token}`); // Set the Authorization header
 
         res.cookie("authToken", token, {
             httpOnly: true,

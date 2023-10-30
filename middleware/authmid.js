@@ -12,7 +12,7 @@ const auth = (req,res,next)=>{
             req.user = decoded; // Store user data in the request object
 
         }else{
-            return res.status(401).json({message : "User not authorized", anothermsg : token});
+            return res.render('login',{message : "Please login first"});
         }
         next();
     } catch (error) {

@@ -57,4 +57,13 @@ const getNotes = async (req, res) => {
     }
 };
 
-module.exports = { createNote, updateNote, deleteNote, getNotes };
+const getnotesid = async (req, res) => {
+        try {
+            const note = await noteModel.find({_id:req.params.id});
+            res.status(200).json(note);
+        } catch (error) {
+            res.status(500).json({ error: "Something went wrong" });
+        }
+};
+
+module.exports = { createNote, updateNote, deleteNote, getNotes, getnotesid };

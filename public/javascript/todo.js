@@ -1,5 +1,7 @@
 const home = document.getElementById('home');
 const logout = document.getElementById('logout');
+const closeButton = document.getElementById("close-button");
+const modal = document.getElementById("modal");
 
 home.addEventListener('click', (e) => {
     e.preventDefault();
@@ -7,16 +9,17 @@ home.addEventListener('click', (e) => {
     window.location.href = '/';
 });
 
-// Example using plain JavaScript
-const deleteButtons = document.querySelectorAll('button[data-note-id]');
-const editButtons = document.querySelectorAll('button[data-note-id]');
+const deleteButtons = document.querySelectorAll('button.delete-button[data-note-id]');
+const editButtons = document.querySelectorAll('button.edit-button[data-note-id]');
+
 
 deleteButtons.forEach((button) => {
     button.addEventListener('click', async () => {
-        const noteId = button.getAttribute('data-note-id');
-
+        const notesId = button.getAttribute('data-note-id');
+        const modifiednoteId = notesId.slice(0, -1);
+        // console.log(modifiednoteId);
         try {
-            const response = await fetch(`http://localhost:3000/notes/${noteId}`, {
+            const response = await fetch(`http://localhost:3000/notes/${modifiednoteId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -24,9 +27,6 @@ deleteButtons.forEach((button) => {
             });
 
             if (response.status == 202) {
-                // console.log('Note deleted successfully');
-                // Optionally, remove the deleted note from the UI.
-                // This depends on your specific implementation.
                 const parentDiv = button.closest('div').parentElement.parentElement.parentElement;
                 parentDiv.remove();
             } else {
@@ -39,9 +39,45 @@ deleteButtons.forEach((button) => {
 });
 
 
+// Define a variable to store the noteId
+let noteId = null;
+
 editButtons.forEach((button) => {
-    button.addEventListener('click', async() => {
-        const noteId = button.getAttribute('data-note-id');
+    button.addEventListener("click", async () => {
+        noteId = button.getAttribute("data-note-id");
+        const titleInput = document.getElementById("title");
+        const descriptionInput = document.getElementById("description");
+
+        // Set default values in the inputs
+        titleInput.value = "Default Title";
+        descriptionInput.value = "Default Description";
+
+        try {
+            const response = await fetch(`http://localhost:3000/notes/${noteId}`);
+            if (response.status === 200) {
+                const data = await response.json();
+                titleInput.value = data[0].title;
+                descriptionInput.value = data[0].description;
+                modal.style.display = "block";
+            } else {
+                console.error("Failed to fetch note data");
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+        }
+    });
+});
+
+document.getElementById("save-button").addEventListener('click', async () => {
+    if (noteId) {
+        const updatedTitle = document.getElementById("title1").value;
+        const updatedDescription = document.getElementById("description1").value;
+
+        if (!updatedTitle || !updatedDescription) {
+            alert('Title or description is missing');
+            return;
+        }
+
         try {
             const response = await fetch(`http://localhost:3000/notes/${noteId}`, {
                 method: 'PUT',
@@ -49,15 +85,35 @@ editButtons.forEach((button) => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    title: document.getElementById("title").value,
-                    description: document.getElementById("description").value,
-                    
+                    id: noteId,
+                    title: updatedTitle,
+                    description: updatedDescription,
                 })
             });
-        } catch (error) {}
-    });
+
+            if (response.status === 200) {
+                modal.style.display = "none";
+                location.reload();
+            } else {
+                console.error('Failed to update the note');
+            }
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    } else {
+        console.error('noteId is null; cannot update the note');
+    }
 });
 
+modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+});
+
+closeButton.addEventListener("click", () => {
+    modal.style.display = "none";
+});
 
 logout.addEventListener('click', (e) => {
     e.preventDefault();

@@ -19,7 +19,7 @@ deleteButtons.forEach((button) => {
         const modifiednoteId = notesId.slice(0, -1);
         // console.log(modifiednoteId);
         try {
-            const response = await fetch(`http://localhost:3000/notes/${modifiednoteId}`, {
+            const response = await fetch(`/notes/${modifiednoteId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ editButtons.forEach((button) => {
         descriptionInput.value = "Default Description";
 
         try {
-            const response = await fetch(`http://localhost:3000/notes/${noteId}`);
+            const response = await fetch(`/notes/${noteId}`);
             if (response.status === 200) {
                 const data = await response.json();
                 titleInput.value = data[0].title;
@@ -79,7 +79,7 @@ document.getElementById("save-button").addEventListener('click', async () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:3000/notes/${noteId}`, {
+            const response = await fetch(`/notes/${noteId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ closeButton.addEventListener("click", () => {
 logout.addEventListener('click', (e) => {
     e.preventDefault();
     console.log("logout");
-    fetch('http://localhost:3000/logout', {
+    fetch('/logout', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

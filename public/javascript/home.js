@@ -5,7 +5,7 @@ const btn = document.getElementById('btn');
 logout.addEventListener('click', (e) => {
     e.preventDefault();
     console.log("logout");
-    fetch('http://localhost:3000/logout', {
+    fetch('/logout', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ if (id) {
         };
 
         try {
-            const response = await fetch('http://localhost:3000/notes', {
+            const response = await fetch('/notes', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

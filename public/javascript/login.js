@@ -17,7 +17,7 @@ btn.addEventListener('click', async (e) => {
     };
 
     try {
-        const response = await fetch('https://todo-list-k90m.onrender.com/login', {
+        const response = await fetch('/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ btn2.addEventListener('click', async (e) => {
     };
 
     try {
-        const response = await fetch('http://localhost:3000/signup', {
+        const response = await fetch('/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

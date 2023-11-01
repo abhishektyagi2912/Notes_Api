@@ -9,7 +9,7 @@ const auth = (req,res,next)=>{
         if(token){
             // token = token.split(" ")[1];    /// bearer token bhi aata h to usko split krke uske baad wala token lenge kyuki y token me bearer likha hua aata h
             let decoded = jwt.verify(token,SECRET_KEY);
-            req.user = decoded; // Store user data in the request object
+            req.userId = decoded.id; // Store user data in the request object
 
         }else{
             return res.render('login',{message : "Please login first"});

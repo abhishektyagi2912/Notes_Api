@@ -7,7 +7,6 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require("cors");
 const path = require('path');
-const auth = require('./middleware/middleware');
 const middleware = require('./middleware/authmid');
 const cookieParser = require('cookie-parser');
 

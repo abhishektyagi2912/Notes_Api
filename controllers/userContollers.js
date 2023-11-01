@@ -29,6 +29,11 @@ const signup = async (req, res) => {
             sameSite : "lax"
             // Other cookie options (e.g., secure, sameSite, maxAge, etc.)
         });
+        res.cookie("userId", user._id, {
+            httpOnly: false,
+            sameSite : "lax"
+            // Other cookie options (e.g., secure, sameSite, maxAge, etc.)
+        });
         return res.status(201).json({result : user, token});   //201 means created sucessfully
     }
     catch(err){
@@ -55,6 +60,11 @@ const login = async (req, res) => {
         res.cookie("authToken", token, {
             httpOnly: true,
             sameSite : "lax"
+            // Other cookie options (e.g., secure, sameSite, maxAge, etc.)
+        });
+        res.cookie("userId", existingUser._id, {
+            httpOnly: false,
+            path : "/"
             // Other cookie options (e.g., secure, sameSite, maxAge, etc.)
         });
 

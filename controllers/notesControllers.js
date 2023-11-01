@@ -21,14 +21,14 @@ const updateNote = async (req, res) => {
     const id = req.params.id;
 
     const newNote = {
-        title : title,
-        description : description,
+        title: title,
+        description: description,
         userId: req.userId,
     };
     try {
-        await noteModel.findByIdAndUpdate(id, newNote,{new:true});//new:true is used to get updated data
-        res.status(200).json({ message: "Note updated" , newNote});
-        
+        await noteModel.findByIdAndUpdate(id, newNote, { new: true });//new:true is used to get updated data
+        res.status(200).json({ message: "Note updated", newNote });
+
     } catch (error) {
         res.status(500).json({ error: "Something went wrong" });
     }
@@ -40,9 +40,9 @@ const deleteNote = async (req, res) => {
     try {
         await noteModel.findByIdAndDelete(id);
         res.status(202).json({ message: "Note deleted" }); //202 means req accepted
-        
+
     } catch (error) {
-        res.status(500).json({ error: "Something went wrong" });        
+        res.status(500).json({ error: "Something went wrong" });
     }
 };
 
@@ -50,11 +50,11 @@ const deleteNote = async (req, res) => {
 const getNotes = async (req, res) => {
     try {
         const notes = await noteModel.find({ userId: req.userId });
-        res.status(200).json(notes);
+        // res.status(200).json(notes);
+        res.render('todo', { notes });
     } catch (error) {
-        res.status(500).json({ error: "Something went wrong" });        
+        res.status(500).json({ error: "Something went wrong" });
     }
-    
 };
 
 module.exports = { createNote, updateNote, deleteNote, getNotes };

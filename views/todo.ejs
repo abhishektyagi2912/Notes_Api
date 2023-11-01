@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My-Todo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <header class="text-gray-600 body-font">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+            <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+                    stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full"
+                    viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                </svg>
+                <span class="ml-3 text-xl">To-Do-List</span>
+            </a>
+            <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+                <a class="mr-5 hover:text-gray-900" id="home">Home</a>
+                <a class="mr-5 hover:text-gray-900" id="todo">My-Todo</a>
+            </nav>
+            <button
+                class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
+                id="logout">LogOut
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+    <section class="text-gray-600 body-font">
+        <ul>
+            <div class="container px-5 py-24 mx-auto">
+                <h1 class="sm:text-3xl text-2xl font-medium title-font text-center text-gray-900 mb-20">Your To-Do List
+                </h1>
+                <div class="flex flex-wrap -m-4">
+                    <% notes.forEach(function(note, index) { %>
+                        <div class="w-full md:w-1/2 lg:w-1/3 p-4">
+                            <div class="bg-white p-6 rounded-lg shadow-md">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h2 class="text-gray-900 text-lg title-font font-medium">
+                                        <%= note.title %>
+                                    </h2>
+                                    <div class="flex space-x-2">
+                                        <button class="text-red-500 hover:text-red-700" data-note-id="<%= note._id %>">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M6 18L18 6M6 6l12 12"></path>
+                                            </svg>
+                                        </button>
+                                        <button class="text-blue-500 hover:text-blue-700" data-note-id="<%= note._id %>">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentcolor"
+                                                viewBox="0 0 20 20" stroke="">
+                                                <path
+                                                    d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z" />
+                                                <path
+                                                    d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z" />
+                                            </svg>
+
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="text-gray-500 text-base">
+                                    <%= note.description %>
+                                </p>
+                            </div>
+                        </div>
+                        <% if (index % 3===2) { %>
+                </div>
+                <div class="flex flex-wrap -m-4">
+                    <% } %>
+                        <% }); %>
+                </div>
+            </div>
+
+        </ul>
+
+    </section>
+    <script src="/javascript/todo.js"></script>
+</body>
+
+</html>

@@ -1,6 +1,5 @@
 const express = require("express");
 const authrouter = express.Router();
-const middleware = require('../middleware/middleware');
 const { signup, login } = require("../controllers/userContollers");
 
 // here we made controllers because we make this file in structure way so here we only call the function from controllers
@@ -11,5 +10,10 @@ authrouter.get('/login', (req, res) => {
     res.render('login');
 });
 
-module.exports = authrouter;
+authrouter.get('/logout', (req, res) => {
+    res.clearCookie('authToken'); // Clear the cookie first
+    res.render('login');
+});
 
+
+module.exports = authrouter;
